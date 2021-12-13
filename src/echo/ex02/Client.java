@@ -1,4 +1,4 @@
-package echo.ex01;
+package echo.ex02;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Client {
 
@@ -37,17 +38,39 @@ public class Client {
 	    InputStreamReader isr = new InputStreamReader(is,"UTF-8");
 	    BufferedReader br = new BufferedReader(isr);
 	    
-	    //메세지 보내기1
-	    String str = "안녕하세요";
-	    bw.write(str);
-	    bw.newLine();
-	    bw.flush();
+	    //Scanner(키보드 입력용)
+	    Scanner sc = new Scanner(System.in);
 	    
-	    //메세지 받기2
-	    String reMsg = br.readLine();
-	    System.out.println("server:[" + reMsg + "]");
+	    ////반복구간 /q넣어야끝나는
+	    while(true){
+		    String str = sc.nextLine();
+	    	if("/q".equals(str)) {//"/q"는 문자로 딱 박혀있어서 주소가없는 경우가 생기지 않을테니 아래처럼쓰지말고 "/q"의 equals로 비교해주는게 null포인트가 발생하지 않게 해준다
+	    		System.out.println("종료키 입력");
+	    		break;
+	    	}
+	    	/*
+		    if(str.equals("/q")) {//str=="/q"는 주소값같은지 비교한것
+	    		break;
+	    	}
+	        */ 
+	    	 //메세지 보내기1
+		    //String str = sc.nextLine();
+		    bw.write(str);
+		    bw.newLine();
+		    bw.flush();
+		    
+		    //메세지 받기2
+		    String reMsg = br.readLine();
+		    System.out.println("server:[" + reMsg + "]");
 	    
 	    
+	    }
+	   
+	    ////반복구간
+	    
+		System.out.println("========================");
+	    System.out.println("<클라이언트종료>");
+	    sc.close();
 	    bw.close();
 	    socket.close();
 	}
